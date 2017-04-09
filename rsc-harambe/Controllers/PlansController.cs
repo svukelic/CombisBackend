@@ -21,8 +21,25 @@ namespace rsc_harambe.Controllers
 
             foreach (plans loc in dbList)
             {
-                ModelPlans ml = new ModelPlans(loc);
-                lista.Add(ml);
+                ModelPlans temp = new ModelPlans(loc);
+                transport t = null;
+                t = db.transport.Find(loc.transport_id);
+                if (t != null)
+                {
+                    locations l = null;
+                    l = db.locations.Find(t.end_id);
+                    if (l != null)
+                    {
+                        temp.destination = l.loc_name;
+                    }
+                }
+                hotels h = null;
+                h = db.hotels.Find(loc.hotel_id);
+                if (h != null)
+                {
+                    temp.hotel_name = h.hotel_name;
+                }
+                lista.Add(temp);
             }
 
             return lista;
@@ -37,6 +54,23 @@ namespace rsc_harambe.Controllers
             if (plan != null)
             {
                 ModelPlans temp = new ModelPlans(plan);
+                transport t = null;
+                t = db.transport.Find(plan.transport_id);
+                if (t != null)
+                {
+                    locations l = null;
+                    l = db.locations.Find(t.end_id);
+                    if (l != null)
+                    {
+                        temp.destination = l.loc_name;
+                    }
+                }
+                hotels h = null;
+                h = db.hotels.Find(plan.hotel_id);
+                if (h != null)
+                {
+                    temp.hotel_name = h.hotel_name;
+                }
                 lista.Add(temp);
             }
 
@@ -69,9 +103,26 @@ namespace rsc_harambe.Controllers
             db.SaveChanges();
 
             ModelPlans temp = new ModelPlans(newPlan);
+            transport t = null;
+            t = db.transport.Find(newPlan.transport_id);
+            if (t != null)
+            {
+                locations l = null;
+                l = db.locations.Find(t.end_id);
+                if(l != null)
+                {
+                    temp.destination = l.loc_name;
+                }
+            }
+            hotels h = null;
+            h = db.hotels.Find(newPlan.hotel_id);
+            if (h != null)
+            {
+                temp.hotel_name = h.hotel_name;
+            }
             newList.Add(temp);
 
-            StatisticsPrijevozi(newPlan.hotel_id.Value, db.transport.Find(newPlan.transport).start_id.Value);
+            //StatisticsPrijevozi(newPlan.hotel_id.Value, db.transport.Find(newPlan.transport).start_id.Value);
 
             return newList;
         }

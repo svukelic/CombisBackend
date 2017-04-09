@@ -297,3 +297,4 @@ D:\Projekti\RSC2016-CodeForHarambe-master\backend\rsc-harambe\bin\Grpc.Auth.xml
 D:\Projekti\RSC2016-CodeForHarambe-master\backend\rsc-harambe\bin\Grpc.Core.xml
 D:\Projekti\RSC2016-CodeForHarambe-master\backend\rsc-harambe\bin\System.Interactive.Async.xml
 D:\Projekti\RSC2016-CodeForHarambe-master\backend\rsc-harambe\bin\Zlib.Portable.xml
+D:\Projekti\RSC2016-CodeForHarambe-master\backend\rsc-harambe\obj\Release\rsc-harambe.csprojResolveAssemblyReference.cache
