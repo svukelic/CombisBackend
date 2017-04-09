@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="harambeDBModelStoreContainer" CdmEntityContainer="harambeDBEntities">
+    <EntitySetMapping Name="TestValues">
+      <EntityTypeMapping TypeName="harambeDBModel.TestValue">
+        <MappingFragment StoreEntitySet="TestValues">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAZIV" ColumnName="NAZIV" />
+          <ScalarProperty Name="VRIJEME" ColumnName="VRIJEME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="activities">
+      <EntityTypeMapping TypeName="harambeDBModel.activities">
+        <MappingFragment StoreEntitySet="activities">
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="season" ColumnName="season" />
+          <ScalarProperty Name="activity_description" ColumnName="activity_description" />
+          <ScalarProperty Name="activity_name" ColumnName="activity_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hotels">
+      <EntityTypeMapping TypeName="harambeDBModel.hotels">
+        <MappingFragment StoreEntitySet="hotels">
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="stars" ColumnName="stars" />
+          <ScalarProperty Name="hotel_address" ColumnName="hotel_address" />
+          <ScalarProperty Name="hotel_name" ColumnName="hotel_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="locations">
+      <EntityTypeMapping TypeName="harambeDBModel.locations">
+        <MappingFragment StoreEntitySet="locations">
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="loc_name" ColumnName="loc_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="plans">
+      <EntityTypeMapping TypeName="harambeDBModel.plans">
+        <MappingFragment StoreEntitySet="plans">
+          <ScalarProperty Name="plan_naziv" ColumnName="plan_naziv" />
+          <ScalarProperty Name="transport_id" ColumnName="transport_id" />
+          <ScalarProperty Name="hotel_id" ColumnName="hotel_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="transport">
+      <EntityTypeMapping TypeName="harambeDBModel.transport">
+        <MappingFragment StoreEntitySet="transport">
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="end_id" ColumnName="end_id" />
+          <ScalarProperty Name="start_id" ColumnName="start_id" />
+          <ScalarProperty Name="transport_type" ColumnName="transport_type" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="harambeDBModel.users">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="ime" ColumnName="ime" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="hotel_activities" TypeName="harambeDBModel.hotel_activities" StoreEntitySet="hotel_activities">
+      <EndProperty Name="hotels">
+        <ScalarProperty Name="id" ColumnName="hotel_id" />
+      </EndProperty>
+      <EndProperty Name="activities">
+        <ScalarProperty Name="id" ColumnName="activity_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="plan_activities" TypeName="harambeDBModel.plan_activities" StoreEntitySet="plan_activities">
+      <EndProperty Name="plans">
+        <ScalarProperty Name="id" ColumnName="plan_id" />
+      </EndProperty>
+      <EndProperty Name="activities">
+        <ScalarProperty Name="id" ColumnName="activity_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="user_plans" TypeName="harambeDBModel.user_plans" StoreEntitySet="user_plans">
+      <EndProperty Name="users">
+        <ScalarProperty Name="id" ColumnName="users_id" />
+      </EndProperty>
+      <EndProperty Name="plans">
+        <ScalarProperty Name="id" ColumnName="plan_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

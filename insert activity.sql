@@ -1,0 +1,2 @@
+﻿INSERT INTO activities(activity_name, activity_description, season, duration) values ('sauna', 'Sweat out like a man', 'any', 1);
+INSERT INTO activities(activity_name, activity_description, season, duration) values ('skiing', 'Get rekt on a snowy mountain', 'winter', 3);

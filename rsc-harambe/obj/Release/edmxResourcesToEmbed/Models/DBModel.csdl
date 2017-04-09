@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="harambeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TestValue">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAZIV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VRIJEME" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityContainer Name="harambeDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TestValues" EntityType="Self.TestValue" />
+    <EntitySet Name="activities" EntityType="harambeDBModel.activities" />
+    <EntitySet Name="hotels" EntityType="harambeDBModel.hotels" />
+    <EntitySet Name="locations" EntityType="harambeDBModel.locations" />
+    <EntitySet Name="plans" EntityType="harambeDBModel.plans" />
+    <EntitySet Name="transport" EntityType="harambeDBModel.transport" />
+    <EntitySet Name="users" EntityType="harambeDBModel.users" />
+    <AssociationSet Name="fk_hotel_loc" Association="harambeDBModel.fk_hotel_loc">
+      <End Role="locations" EntitySet="locations" />
+      <End Role="hotels" EntitySet="hotels" />
+    </AssociationSet>
+    <AssociationSet Name="fk_plan_hotel" Association="harambeDBModel.fk_plan_hotel">
+      <End Role="hotels" EntitySet="hotels" />
+      <End Role="plans" EntitySet="plans" />
+    </AssociationSet>
+    <AssociationSet Name="fk_end_loc" Association="harambeDBModel.fk_end_loc">
+      <End Role="locations" EntitySet="locations" />
+      <End Role="transport" EntitySet="transport" />
+    </AssociationSet>
+    <AssociationSet Name="fk_start_loc" Association="harambeDBModel.fk_start_loc">
+      <End Role="locations" EntitySet="locations" />
+      <End Role="transport" EntitySet="transport" />
+    </AssociationSet>
+    <AssociationSet Name="fk_plan_transport" Association="harambeDBModel.fk_plan_transport">
+      <End Role="transport" EntitySet="transport" />
+      <End Role="plans" EntitySet="plans" />
+    </AssociationSet>
+    <AssociationSet Name="hotel_activities" Association="harambeDBModel.hotel_activities">
+      <End Role="activities" EntitySet="activities" />
+      <End Role="hotels" EntitySet="hotels" />
+    </AssociationSet>
+    <AssociationSet Name="plan_activities" Association="harambeDBModel.plan_activities">
+      <End Role="activities" EntitySet="activities" />
+      <End Role="plans" EntitySet="plans" />
+    </AssociationSet>
+    <AssociationSet Name="user_plans" Association="harambeDBModel.user_plans">
+      <End Role="plans" EntitySet="plans" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+    <EntitySet Name="statistics_activities" EntityType="harambeDBModel.statistics_activities" />
+    <EntitySet Name="statistics_food" EntityType="harambeDBModel.statistics_food" />
+    <EntitySet Name="statistics_images" EntityType="harambeDBModel.statistics_images" />
+    <EntitySet Name="statistics_transport" EntityType="harambeDBModel.statistics_transport" />
+  </EntityContainer>
+  <EntityType Name="activities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="activity_name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="activity_description" Type="String" MaxLength="320" FixedLength="false" Unicode="false" />
+    <Property Name="season" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="duration" Type="Int32" />
+    <NavigationProperty Name="hotels" Relationship="harambeDBModel.hotel_activities" FromRole="activities" ToRole="hotels" />
+    <NavigationProperty Name="plans" Relationship="harambeDBModel.plan_activities" FromRole="activities" ToRole="plans" />
+  </EntityType>
+  <EntityType Name="hotels">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hotel_name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="hotel_address" Type="String" MaxLength="320" FixedLength="false" Unicode="false" />
+    <Property Name="stars" Type="Int32" />
+    <Property Name="loc_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="locations" Relationship="harambeDBModel.fk_hotel_loc" FromRole="hotels" ToRole="locations" />
+    <NavigationProperty Name="plans" Relationship="harambeDBModel.fk_plan_hotel" FromRole="hotels" ToRole="plans" />
+    <NavigationProperty Name="activities" Relationship="harambeDBModel.hotel_activities" FromRole="hotels" ToRole="activities" />
+  </EntityType>
+  <EntityType Name="locations">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loc_name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="hotels" Relationship="harambeDBModel.fk_hotel_loc" FromRole="locations" ToRole="hotels" />
+    <NavigationProperty Name="transport" Relationship="harambeDBModel.fk_end_loc" FromRole="locations" ToRole="transport" />
+    <NavigationProperty Name="transport1" Relationship="harambeDBModel.fk_start_loc" FromRole="locations" ToRole="transport" />
+  </EntityType>
+  <EntityType Name="plans">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hotel_id" Type="Int32" />
+    <Property Name="transport_id" Type="Int32" />
+    <NavigationProperty Name="hotels" Relationship="harambeDBModel.fk_plan_hotel" FromRole="plans" ToRole="hotels" />
+    <NavigationProperty Name="transport" Relationship="harambeDBModel.fk_plan_transport" FromRole="plans" ToRole="transport" />
+    <NavigationProperty Name="activities" Relationship="harambeDBModel.plan_activities" FromRole="plans" ToRole="activities" />
+    <NavigationProperty Name="users" Relationship="harambeDBModel.user_plans" FromRole="plans" ToRole="users" />
+    <Property Name="plan_naziv" Type="String" MaxLength="160" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="transport">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="transport_type" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="start_id" Type="Int32" />
+    <Property Name="end_id" Type="Int32" />
+    <Property Name="duration" Type="Int32" />
+    <NavigationProperty Name="locations" Relationship="harambeDBModel.fk_end_loc" FromRole="transport" ToRole="locations" />
+    <NavigationProperty Name="locations1" Relationship="harambeDBModel.fk_start_loc" FromRole="transport" ToRole="locations" />
+    <NavigationProperty Name="plans" Relationship="harambeDBModel.fk_plan_transport" FromRole="transport" ToRole="plans" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ime" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="plans" Relationship="harambeDBModel.user_plans" FromRole="users" ToRole="plans" />
+  </EntityType>
+  <Association Name="fk_hotel_loc">
+    <End Type="harambeDBModel.locations" Role="locations" Multiplicity="1" />
+    <End Type="harambeDBModel.hotels" Role="hotels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="locations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="hotels">
+        <PropertyRef Name="loc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_plan_hotel">
+    <End Type="harambeDBModel.hotels" Role="hotels" Multiplicity="0..1" />
+    <End Type="harambeDBModel.plans" Role="plans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hotels">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="plans">
+        <PropertyRef Name="hotel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_end_loc">
+    <End Type="harambeDBModel.locations" Role="locations" Multiplicity="0..1" />
+    <End Type="harambeDBModel.transport" Role="transport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="locations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transport">
+        <PropertyRef Name="end_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_start_loc">
+    <End Type="harambeDBModel.locations" Role="locations" Multiplicity="0..1" />
+    <End Type="harambeDBModel.transport" Role="transport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="locations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transport">
+        <PropertyRef Name="start_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_plan_transport">
+    <End Type="harambeDBModel.transport" Role="transport" Multiplicity="0..1" />
+    <End Type="harambeDBModel.plans" Role="plans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="transport">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="plans">
+        <PropertyRef Name="transport_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="hotel_activities">
+    <End Type="harambeDBModel.activities" Role="activities" Multiplicity="*" />
+    <End Type="harambeDBModel.hotels" Role="hotels" Multiplicity="*" />
+  </Association>
+  <Association Name="plan_activities">
+    <End Type="harambeDBModel.activities" Role="activities" Multiplicity="*" />
+    <End Type="harambeDBModel.plans" Role="plans" Multiplicity="*" />
+  </Association>
+  <Association Name="user_plans">
+    <End Type="harambeDBModel.plans" Role="plans" Multiplicity="*" />
+    <End Type="harambeDBModel.users" Role="users" Multiplicity="*" />
+  </Association>
+  <EntityType Name="statistics_activities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hotel_id" Type="Int32" />
+    <Property Name="naziv" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="cnt" Type="Int32" />
+    <Property Name="hotel_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="statistics_food">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="users_id" Type="Int32" />
+    <Property Name="hotel_id" Type="Int32" />
+    <Property Name="naziv" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="cnt" Type="Int32" />
+    <Property Name="hotel_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="statistics_images">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hotel_id" Type="Int32" />
+    <Property Name="naziv" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="cnt" Type="Int32" />
+    <Property Name="hotel_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="statistics_transport">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="source_id" Type="Int32" />
+    <Property Name="hotel_id" Type="Int32" />
+    <Property Name="cnt" Type="Int32" />
+    <Property Name="hotel_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

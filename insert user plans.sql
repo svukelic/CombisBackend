@@ -1,0 +1,1 @@
+﻿INSERT INTO user_plans(users_id, plan_id) values (6, 2);

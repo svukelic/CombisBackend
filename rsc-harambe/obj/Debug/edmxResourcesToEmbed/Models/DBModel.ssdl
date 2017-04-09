@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="harambeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="activities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="activity_name" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="activity_description" Type="varchar" MaxLength="320" />
+    <Property Name="season" Type="varchar" MaxLength="30" />
+    <Property Name="duration" Type="int" />
+  </EntityType>
+  <EntityType Name="hotel_activities">
+    <Key>
+      <PropertyRef Name="hotel_id" />
+      <PropertyRef Name="activity_id" />
+    </Key>
+    <Property Name="hotel_id" Type="int" Nullable="false" />
+    <Property Name="activity_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="hotels">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hotel_name" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="hotel_address" Type="varchar" MaxLength="320" />
+    <Property Name="stars" Type="int" />
+    <Property Name="loc_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="locations">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="loc_name" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="country" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="plan_activities">
+    <Key>
+      <PropertyRef Name="plan_id" />
+      <PropertyRef Name="activity_id" />
+    </Key>
+    <Property Name="plan_id" Type="int" Nullable="false" />
+    <Property Name="activity_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="plans">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hotel_id" Type="int" />
+    <Property Name="transport_id" Type="int" />
+    <Property Name="plan_naziv" Type="varchar" MaxLength="160" />
+  </EntityType>
+  <EntityType Name="TestValues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAZIV" Type="varchar" MaxLength="50" />
+    <Property Name="VRIJEME" Type="datetime" />
+  </EntityType>
+  <EntityType Name="transport">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="transport_type" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="start_id" Type="int" />
+    <Property Name="end_id" Type="int" />
+    <Property Name="duration" Type="int" />
+  </EntityType>
+  <EntityType Name="user_plans">
+    <Key>
+      <PropertyRef Name="plan_id" />
+      <PropertyRef Name="users_id" />
+    </Key>
+    <Property Name="plan_id" Type="int" Nullable="false" />
+    <Property Name="users_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ime" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="80" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_end_loc">
+    <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+    <End Role="transport" Type="Self.transport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="locations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transport">
+        <PropertyRef Name="end_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ha_activity">
+    <End Role="activities" Type="Self.activities" Multiplicity="1" />
+    <End Role="hotel_activities" Type="Self.hotel_activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="activities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="hotel_activities">
+        <PropertyRef Name="activity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ha_hotel">
+    <End Role="hotels" Type="Self.hotels" Multiplicity="1" />
+    <End Role="hotel_activities" Type="Self.hotel_activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hotels">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="hotel_activities">
+        <PropertyRef Name="hotel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_hotel_loc">
+    <End Role="locations" Type="Self.locations" Multiplicity="1" />
+    <End Role="hotels" Type="Self.hotels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="locations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="hotels">
+        <PropertyRef Name="loc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pa_activity">
+    <End Role="activities" Type="Self.activities" Multiplicity="1" />
+    <End Role="plan_activities" Type="Self.plan_activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="activities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="plan_activities">
+        <PropertyRef Name="activity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pa_hotel">
+    <End Role="plans" Type="Self.plans" Multiplicity="1" />
+    <End Role="plan_activities" Type="Self.plan_activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="plans">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="plan_activities">
+        <PropertyRef Name="plan_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_plan_hotel">
+    <End Role="hotels" Type="Self.hotels" Multiplicity="0..1" />
+    <End Role="plans" Type="Self.plans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hotels">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="plans">
+        <PropertyRef Name="hotel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_plan_transport">
+    <End Role="transport" Type="Self.transport" Multiplicity="0..1" />
+    <End Role="plans" Type="Self.plans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="transport">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="plans">
+        <PropertyRef Name="transport_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pu_plan">
+    <End Role="plans" Type="Self.plans" Multiplicity="1" />
+    <End Role="user_plans" Type="Self.user_plans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="plans">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_plans">
+        <PropertyRef Name="plan_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pu_user">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="user_plans" Type="Self.user_plans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_plans">
+        <PropertyRef Name="users_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_start_loc">
+    <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+    <End Role="transport" Type="Self.transport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="locations">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transport">
+        <PropertyRef Name="start_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="harambeDBModelStoreContainer">
+    <EntitySet Name="activities" EntityType="Self.activities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="hotel_activities" EntityType="Self.hotel_activities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="hotels" EntityType="Self.hotels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="locations" EntityType="Self.locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="plan_activities" EntityType="Self.plan_activities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="plans" EntityType="Self.plans" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestValues" EntityType="Self.TestValues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="transport" EntityType="Self.transport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_plans" EntityType="Self.user_plans" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_end_loc" Association="Self.fk_end_loc">
+      <End Role="locations" EntitySet="locations" />
+      <End Role="transport" EntitySet="transport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ha_activity" Association="Self.FK_ha_activity">
+      <End Role="activities" EntitySet="activities" />
+      <End Role="hotel_activities" EntitySet="hotel_activities" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ha_hotel" Association="Self.fk_ha_hotel">
+      <End Role="hotels" EntitySet="hotels" />
+      <End Role="hotel_activities" EntitySet="hotel_activities" />
+    </AssociationSet>
+    <AssociationSet Name="fk_hotel_loc" Association="Self.fk_hotel_loc">
+      <End Role="locations" EntitySet="locations" />
+      <End Role="hotels" EntitySet="hotels" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pa_activity" Association="Self.fk_pa_activity">
+      <End Role="activities" EntitySet="activities" />
+      <End Role="plan_activities" EntitySet="plan_activities" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pa_hotel" Association="Self.fk_pa_hotel">
+      <End Role="plans" EntitySet="plans" />
+      <End Role="plan_activities" EntitySet="plan_activities" />
+    </AssociationSet>
+    <AssociationSet Name="fk_plan_hotel" Association="Self.fk_plan_hotel">
+      <End Role="hotels" EntitySet="hotels" />
+      <End Role="plans" EntitySet="plans" />
+    </AssociationSet>
+    <AssociationSet Name="fk_plan_transport" Association="Self.fk_plan_transport">
+      <End Role="transport" EntitySet="transport" />
+      <End Role="plans" EntitySet="plans" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pu_plan" Association="Self.fk_pu_plan">
+      <End Role="plans" EntitySet="plans" />
+      <End Role="user_plans" EntitySet="user_plans" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pu_user" Association="Self.fk_pu_user">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_plans" EntitySet="user_plans" />
+    </AssociationSet>
+    <AssociationSet Name="fk_start_loc" Association="Self.fk_start_loc">
+      <End Role="locations" EntitySet="locations" />
+      <End Role="transport" EntitySet="transport" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

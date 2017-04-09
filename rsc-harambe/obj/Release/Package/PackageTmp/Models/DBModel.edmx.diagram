@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5d76e690bbdf4f5987b102e5bf0b6d7d" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="harambeDBModel.TestValue" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="harambeDBModel.activities" Width="1.5" PointX="1.375" PointY="7" />
+        <EntityTypeShape EntityType="harambeDBModel.hotels" Width="1.5" PointX="0.625" PointY="10.25" />
+        <EntityTypeShape EntityType="harambeDBModel.locations" Width="1.5" PointX="3.75" PointY="6.75" />
+        <EntityTypeShape EntityType="harambeDBModel.plans" Width="1.5" PointX="4.875" PointY="10.375" />
+        <EntityTypeShape EntityType="harambeDBModel.transport" Width="1.5" PointX="2.75" PointY="10.25" />
+        <EntityTypeShape EntityType="harambeDBModel.users" Width="1.5" PointX="7" PointY="8.125" />
+        <AssociationConnector Association="harambeDBModel.fk_hotel_loc" />
+        <AssociationConnector Association="harambeDBModel.fk_plan_hotel" />
+        <AssociationConnector Association="harambeDBModel.fk_end_loc" />
+        <AssociationConnector Association="harambeDBModel.fk_start_loc" />
+        <AssociationConnector Association="harambeDBModel.fk_plan_transport" />
+        <AssociationConnector Association="harambeDBModel.hotel_activities" />
+        <AssociationConnector Association="harambeDBModel.plan_activities" />
+        <AssociationConnector Association="harambeDBModel.user_plans" />
+        <EntityTypeShape EntityType="harambeDBModel.statistics_activities" Width="1.5" PointX="7" PointY="3.75" />
+        <EntityTypeShape EntityType="harambeDBModel.statistics_food" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="harambeDBModel.statistics_images" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="harambeDBModel.statistics_transport" Width="1.5" PointX="4.625" PointY="4" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
